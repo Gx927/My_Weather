@@ -41,7 +41,7 @@ public class ChooseAreaFragment extends Fragment {
     public static final int LEVEL_CITY = 1;
 
     public static final int LEVEL_COUNTY = 2;
-
+    public static final String ADDRESS = "http://192.168.65.1:8080/China/";
     private ProgressDialog progressDialog;
 
     private TextView titleText;
@@ -153,8 +153,10 @@ public class ChooseAreaFragment extends Fragment {
             listView.setSelection(0);
             currentLevel = LEVEL_PROVINCE;
         } else {
-            String address = "http://guolin.tech/api/china";
-            queryFromServer(address, "province");
+
+          /* String address = "http://121.196.151.151:8080/api/China";*/
+            queryFromServer(ADDRESS, "province");
+
         }
     }
 
@@ -175,7 +177,7 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel = LEVEL_CITY;
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
-            String address = "http://guolin.tech/api/china/" + provinceCode;
+            String address = ADDRESS + provinceCode;
             queryFromServer(address, "city");
         }
     }
@@ -198,7 +200,7 @@ public class ChooseAreaFragment extends Fragment {
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
             int cityCode = selectedCity.getCityCode();
-            String address = "http://guolin.tech/api/china/" + provinceCode + "/" + cityCode;
+            String address = ADDRESS + provinceCode + "/" + cityCode;
             queryFromServer(address, "county");
         }
     }
@@ -224,6 +226,7 @@ public class ChooseAreaFragment extends Fragment {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String responseText = response.body().string();
+                Log.d("TAG", "onResponse: "+responseText);
                 boolean result = false;
                 if ("province".equals(type)) {
                     result = Utility.handleProvinceResponse(responseText);

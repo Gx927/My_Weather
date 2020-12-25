@@ -3,7 +3,6 @@
     package="com.example.my_weather">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
